@@ -5,7 +5,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 // Replace with your repo URL
-                git branch: 'main', url: 'https://github.com/ReshmaArsh/jenkinsdemo.git'
+                git branch: 'main', url: 'https://github.com/ReshmaArsh/jenkinsdemo.git',  credentialsId: 'github-creds'
             }
         }
 
