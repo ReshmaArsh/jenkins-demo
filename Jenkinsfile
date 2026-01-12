@@ -1,24 +1,43 @@
 pipeline {
-    agent { label 'windows' } // Ensure Jenkins agent is Windows
+    agent {
+        label 'windows'   // Jenkins Windows agent label
+    }
+
+    options {
+        timestamps()      // Adds timestamps to logs
+    }
 
     stages {
-        stage('Clone Repository') {
+
+        stage('Checkout Source Code') {
             steps {
-                // Replace with your repo URL
-                git branch: 'main', url: 'https://github.com/ReshmaArsh/jenkinsdemo.git',  credentialsId: 'github-creds'
+                echo "🔄 Cloning GitHub repository..."
+                git branch: 'main',
+                    url: 'https://github.com/ReshmaArsh/jenkinsdemo.git',
+                    credentialsId: 'github-creds'
             }
         }
 
         stage('Verify index.html') {
             steps {
                 script {
-                    // PowerShell command to check file existence
-                    def fileExists = bat(script: 'if exist index.html (echo true) else (echo false)', returnStdout: true).trim()
-                    
-                    if (fileExists == 'true') {
+                    echo "🔍 Checking for index.html..."
+
+                    def result = bat(
+                        script: '''
+                        if exist index.html (
+                            echo FOUND
+                        ) else (
+                            echo NOT_FOUND
+                        )
+                        ''',
+                        returnStdout: true
+                    ).trim()
+
+                    if (result.contains('FOUND')) {
                         echo "✅ index.html found!"
                     } else {
-                        error "❌ index.html not found!"
+                        error "❌ index.html not found in workspace!"
                     }
                 }
             }
@@ -28,6 +47,18 @@ pipeline {
             steps {
                 echo "🎉 Pipeline completed successfully on Windows!"
             }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ BUILD SUCCESSFUL"
+        }
+        failure {
+            echo "❌ BUILD FAILED"
+        }
+        always {
+            echo "🧹 Pipeline finished (cleanup can go here)"
         }
     }
 }
