@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo "🔄 Cloning GitHub repository..."
                 git branch: 'main',
-                    url: 'https://github.com/ReshmaArsh/jenkinsdemo.git',
+                    url: 'https://github.com/ReshmaArsh/jenkins-demo.git',
                     credentialsId: 'github-creds'
             }
         }
