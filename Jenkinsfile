@@ -1,7 +1,6 @@
 pipeline {
-    agent {
-        label 'windows'   // Jenkins Windows agent label
-    }
+    agent any  // Jenkins Windows agent label
+    
 
     options {
         timestamps()      // Adds timestamps to logs
