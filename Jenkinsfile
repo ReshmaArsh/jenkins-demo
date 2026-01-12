@@ -1,5 +1,5 @@
 pipeline {
-    agent any  // Jenkins Windows agent label
+    agent { label 'windows' } // Jenkins Windows agent label
     
 
     options {
