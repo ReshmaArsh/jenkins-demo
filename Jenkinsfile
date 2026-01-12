@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'windows' }  // Ensure Jenkins agent is Windows
+    agent any // Ensure Jenkins agent is Windows
 
     stages {
         stage('Clone Repository') {
